@@ -122,6 +122,15 @@ The system stores data in the `data/` directory (gitignored):
 - `notified-repos.json`: List of repositories that have received issues/notifications
 - `created-prs.json`: List of repositories where PR creation was attempted
 
+## Templates
+
+The `templates/` directory contains example templates for issues and pull requests:
+
+- `issue-best-practices.md`: Example issue template for sharing AGENTS.md best practices
+- `pr-format-update.md`: Example PR template for proposing AGENTS.md updates
+
+You can use these as starting points and customize them for your needs.
+
 ## Manual Usage
 
 ### Running Locally
