@@ -73,12 +73,12 @@ All scripts include:
 
 ## Data Persistence
 
-Scripts store data in the `../data/` directory:
+Scripts store data in the `../data/` directory (which is automatically created when scripts run):
 - Tracked repositories
 - Notification history
 - PR creation logs
 
-This prevents duplicate notifications and maintains state across runs.
+This prevents duplicate notifications and maintains state across runs. The `data/` directory is in `.gitignore` to keep runtime data out of version control.
 
 ## Error Handling
 

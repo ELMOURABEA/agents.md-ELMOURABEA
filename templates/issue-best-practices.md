@@ -34,7 +34,7 @@ We're from the [AGENTS.md](https://agents.md) project, and we wanted to share so
 
 - 📚 [AGENTS.md Documentation](https://agents.md)
 - 💡 [Examples from other projects](https://github.com/search?q=path%3AAGENTS.md&type=code)
-- 📖 [Sample AGENTS.md template](https://github.com/ELMOURABEA/agents.md-ELMOURABEA/blob/main/README.md)
+- 📖 [Best practices and guidelines](https://agents.md)
 
 ### Questions?
 
