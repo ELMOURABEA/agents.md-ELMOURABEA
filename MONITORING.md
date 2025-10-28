@@ -7,6 +7,7 @@ This system helps monitor repositories that use AGENTS.md and allows for outreac
 - **Repository Discovery**: Automatically searches GitHub for repositories using AGENTS.md
 - **Update Tracking**: Monitors tracked repositories for updates
 - **Issue Creation**: Creates issues in repositories to notify about updates or best practices
+- **Pull Request Creation**: Guidance for creating pull requests with AGENTS.md updates
 
 ## Workflows
 
@@ -31,6 +32,21 @@ Manually triggered workflow to create issues in tracked repositories.
 - `issue_body`: Body content for the issue
 - `max_repos`: Maximum number of repositories to create issues in (default: 10)
 - `dry_run`: Set to 'true' for testing without creating actual issues (default: true)
+
+### 3. Create Pull Requests for AGENTS.md Updates
+**File**: `.github/workflows/create-pull-requests.yml`
+
+Manually triggered workflow to create pull requests in tracked repositories.
+
+**Inputs**:
+- `pr_title`: Title for the pull request (default: "Update AGENTS.md format")
+- `pr_body`: Body content for the pull request
+- `branch_name`: Branch name to create (default: "update-agents-md")
+- `file_content`: New AGENTS.md content (optional)
+- `max_repos`: Maximum number of repositories to process (default: 5)
+- `dry_run`: Set to 'true' for testing without creating actual PRs (default: true)
+
+**Note**: Creating pull requests requires repository forks and proper authentication. The script provides guidance for manual PR creation.
 
 ## Scripts
 
@@ -70,12 +86,41 @@ node scripts/create-issues.js
 **Output**:
 - Creates/updates `data/notified-repos.json` to track which repositories have been notified
 
+### create-pull-requests.js
+
+Provides guidance for creating pull requests in tracked repositories.
+
+**Usage**:
+```bash
+GITHUB_TOKEN=your_token \
+PR_TITLE="Your PR Title" \
+PR_BODY="Your PR body content" \
+BRANCH_NAME="update-agents-md" \
+MAX_REPOS=5 \
+DRY_RUN=true \
+node scripts/create-pull-requests.js
+```
+
+**Environment Variables**:
+- `GITHUB_TOKEN`: Required for GitHub API access
+- `PR_TITLE`: Title for the pull request
+- `PR_BODY`: Body content for the pull request
+- `BRANCH_NAME`: Branch name to create
+- `FILE_CONTENT`: Optional new AGENTS.md content
+- `MAX_REPOS`: Maximum number of repositories to process
+- `DRY_RUN`: Set to 'true' to test without attempting PR creation
+
+**Output**:
+- Creates/updates `data/created-prs.json` to track PR creation attempts
+- Provides manual instructions for completing PR creation
+
 ## Data Files
 
 The system stores data in the `data/` directory (gitignored):
 
 - `tracked-repos.json`: List of all repositories found with AGENTS.md
 - `notified-repos.json`: List of repositories that have received issues/notifications
+- `created-prs.json`: List of repositories where PR creation was attempted
 
 ## Manual Usage
 
