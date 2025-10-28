@@ -1,0 +1,49 @@
+name: Create Issues for AGENTS.md Updates
+
+on:
+  workflow_dispatch:
+    inputs:
+      issue_title:
+        description: 'Title for the issue to create'
+        required: true
+        default: 'Update AGENTS.md format'
+      issue_body:
+        description: 'Body content for the issue'
+        required: true
+        default: 'Consider updating your AGENTS.md file to follow the latest best practices from https://agents.md'
+      max_repos:
+        description: 'Maximum number of repositories to create issues in'
+        required: false
+        default: '10'
+      dry_run:
+        description: 'Dry run mode (will not actually create issues)'
+        required: false
+        default: 'true'
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  create-issues:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create issues in repositories
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_TITLE: ${{ github.event.inputs.issue_title }}
+          ISSUE_BODY: ${{ github.event.inputs.issue_body }}
+          MAX_REPOS: ${{ github.event.inputs.max_repos }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+        run: node scripts/create-issues.js
