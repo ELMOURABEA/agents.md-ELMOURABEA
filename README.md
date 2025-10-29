@@ -49,3 +49,13 @@ that explains the project’s goals in a simple way, and featuring some examples
    npm run dev
    ```
 3. Open your browser and go to http://localhost:3000
+
+## Repository Monitoring
+
+This repository includes automated workflows to monitor and engage with repositories using AGENTS.md:
+
+- **Repository Discovery**: Automatically finds repositories with AGENTS.md files on GitHub
+- **Update Tracking**: Monitors tracked repositories for changes and updates
+- **Outreach Automation**: Create issues in repositories to share updates or best practices
+
+See [MONITORING.md](MONITORING.md) for detailed documentation on how to use these features.

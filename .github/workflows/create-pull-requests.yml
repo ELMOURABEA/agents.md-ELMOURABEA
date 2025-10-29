@@ -1,0 +1,58 @@
+name: Create Pull Requests for AGENTS.md Updates
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_title:
+        description: 'Title for the pull request'
+        required: true
+        default: 'Update AGENTS.md format'
+      pr_body:
+        description: 'Body content for the pull request'
+        required: true
+        default: 'This PR updates the AGENTS.md file to follow the latest best practices from https://agents.md'
+      branch_name:
+        description: 'Branch name to create'
+        required: false
+        default: 'update-agents-md'
+      file_content:
+        description: 'New AGENTS.md content (or leave empty for suggestions only)'
+        required: false
+        default: ''
+      max_repos:
+        description: 'Maximum number of repositories to create PRs in'
+        required: false
+        default: '5'
+      dry_run:
+        description: 'Dry run mode (will not actually create PRs)'
+        required: false
+        default: 'true'
+
+permissions:
+  contents: read
+
+jobs:
+  create-pull-requests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Create pull requests in repositories
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_TITLE: ${{ github.event.inputs.pr_title }}
+          PR_BODY: ${{ github.event.inputs.pr_body }}
+          BRANCH_NAME: ${{ github.event.inputs.branch_name }}
+          FILE_CONTENT: ${{ github.event.inputs.file_content }}
+          MAX_REPOS: ${{ github.event.inputs.max_repos }}
+          DRY_RUN: ${{ github.event.inputs.dry_run }}
+        run: node scripts/create-pull-requests.js
